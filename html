@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Consciência Social</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz de Consciência Social, Cultural e Ambiental</h1>
+        <form id="quizForm">
+            <div class="question">
+                <p>1. Você costuma separar o lixo reciclável em casa?</p>
+                <label><input type="radio" name="q1" value="ambiente"> Sempre</label>
+                <label><input type="radio" name="q1" value="neutro"> Às vezes</label>
+                <label><input type="radio" name="q1" value="outro"> Nunca</label>
+            </div>
+            <div class="question">
+                <p>2. Qual a sua relação com culturas diferentes da sua?</p>
+                <label><input type="radio" name="q2" value="cultural"> Respeito e aprendo</label>
+                <label><input type="radio" name="q2" value="neutro"> Indiferença</label>
+                <label><input type="radio" name="q2" value="outro"> Preconceito</label>
+            </div>
+            <div class="question">
+                <p>3. O que você faz para contribuir com sua comunidade?</p>
+                <label><input type="radio" name="q3" value="social"> Participo de ações sociais</label>
+                <label><input type="radio" name="q3" value="neutro"> Apenas observo</label>
+                <label><input type="radio" name="q3" value="outro"> Não faço nada</label>
+            </div>
+            <div class="question">
+                <p>4. Como você se informa sobre problemas sociais?</p>
+                <label><input type="radio" name="q4" value="social"> Leio e pesquiso sobre o tema</label>
+                <label><input type="radio" name="q4" value="neutro"> Às vezes vejo nas redes</label>
+                <label><input type="radio" name="q4" value="outro"> Não me interesso</label>
+            </div>
+            <div class="question">
+                <p>5. Qual sua atitude diante de desastres ambientais?</p>
+                <label><input type="radio" name="q5" value="ambiente"> Me envolvo e apoio</label>
+                <label><input type="radio" name="q5" value="neutro"> Só compartilho notícias</label>
+                <label><input type="radio" name="q5" value="outro"> Ignoro</label>
+            </div>
+            <button type="submit">Ver Resultado</button>
+        </form>
+        <div id="resultado" class="hidden"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('quizForm');
+        const resultado = document.getElementById('resultado');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let respostas = new FormData(form);
+            let contagem = { ambiente: 0, cultural: 0, social: 0, outro: 0, neutro: 0 };
+
+            for (let [key, value] of respostas.entries()) {
+                contagem[value]++;
+            }
+
+            let mensagem = '';
+            if (contagem.social >= 2) {
+                mensagem += '<p>Você demonstra forte consciência social. Parabéns por se envolver com a comunidade!</p>';
+            }
+            if (contagem.ambiente >= 2) {
+                mensagem += '<p>Sua atitude ambiental é um exemplo! Continue cuidando do planeta.</p>';
+            }
+            if (contagem.cultural >= 1) {
+                mensagem += '<p>Você valoriza a diversidade cultural, isso é essencial para uma sociedade justa.</p>';
+            }
+            if (contagem.outro >= 2) {
+                mensagem += '<p>É importante refletir sobre como suas ações impactam o mundo. Considere se informar mais e agir de forma mais consciente.</p>';
+            }
+            if (mensagem === '') {
+                mensagem = '<p>Você teve respostas neutras. Que tal se engajar mais nos temas sociais e ambientais?</p>';
+            }
+
+            resultado.innerHTML = mensagem;
+            resultado.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
